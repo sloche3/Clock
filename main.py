@@ -39,6 +39,22 @@ for i in range(325):
         boxes[i].grid(row = r, column = c)
         c += 1
 
+
+def gogo(i):
+    boxes[i].delete(1.0)
+    #time.sleep(2)
+    boxes[i].insert(END, str(randint(0, 9)), )
+
+
+def rand():
+    for x in range(3):
+        for y in range(325):
+            factor = randint(0,5)
+            wait = (factor * 100) + 3000
+            root.after(wait, gogo, y)
+
+root.after(1000, rand)
+
 #mainloop()
 
 
