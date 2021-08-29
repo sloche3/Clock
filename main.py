@@ -23,35 +23,55 @@ while True:
 boxes = {}
 r = 0
 c = 0
-for i in range(325):
-    boxes[i] = Text(root, height = 1, width = 2)
-    #boxes[i] = Text(root)
-    boxes[i].config(font = "Consolas 50")
-    boxes[i].tag_configure("center", justify='center')
-    boxes[i].insert(END, str(randint(0, 9)), )
-    boxes[i].tag_add("center", '1.0', 'end')
+for i in range(325): # i got lazy here...
+    ##    boxes[(c,r)] = Text(root, height = 1, width = 2)
+    ##    print((c,r))
+    ##    #boxes[i] = Text(root)
+    ##    boxes[(c,r)].config(font = "Consolas 50")
+    ##    boxes[(c,r)].tag_configure("center", justify='center')
+    ##    boxes[(c,r)].insert(END, str(randint(0, 9)), )
+    ##    boxes[(c,r)].tag_add("center", '1.0', 'end')
     if c < 25:
-        boxes[i].grid(row = r, column = c)
+
+        boxes[(c,r)] = Text(root, height = 1, width = 2)
+        #print((c,r))
+        #boxes[i] = Text(root)
+        boxes[(c,r)].config(font = "Consolas 50")
+        boxes[(c,r)].tag_configure("center", justify='center')
+        boxes[(c,r)].insert(END, str(randint(0, 9)), )
+        boxes[(c,r)].tag_add("center", '1.0', 'end')
+
+        boxes[(c,r)].grid(row = r, column = c)
         c += 1
     else:
         c = 0
         r += 1
-        boxes[i].grid(row = r, column = c)
+
+        boxes[(c,r)] = Text(root, height = 1, width = 2)
+        #print((c,r))
+        #boxes[i] = Text(root)
+        boxes[(c,r)].config(font = "Consolas 50")
+        boxes[(c,r)].tag_configure("center", justify='center')
+        boxes[(c,r)].insert(END, str(randint(0, 9)), )
+        boxes[(c,r)].tag_add("center", '1.0', 'end')
+
+        boxes[(c,r)].grid(row = r, column = c)
         c += 1
 
 
-def gogo(i):
-    boxes[i].delete(1.0)
+def gogo(x, y):
+    boxes[(x,y)].delete(1.0)
     #time.sleep(2)
-    boxes[i].insert(END, str(randint(0, 9)), )
-
+    boxes[(x,y)].insert(END, str(randint(0, 9)), )
+    boxes[(x,y)].tag_add("center", '1.0', 'end')
 
 def rand():
     for x in range(3):
-        for y in range(325):
+        for y in boxes:
             factor = randint(0,5)
             wait = (factor * 100) + 3000
-            root.after(wait, gogo, y)
+            root.after(wait, gogo, y[0], y[1])
+        #time.sleep(0.001)
 
 root.after(1000, rand)
 
