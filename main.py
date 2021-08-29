@@ -1,5 +1,7 @@
 from tkinter import *
-from random import randint
+from random import randint, choice
+from datetime import datetime
+import time
 
 root = Tk()
 
@@ -73,7 +75,117 @@ def rand():
             root.after(wait, gogo, y[0], y[1])
         #time.sleep(0.001)
 
-root.after(1000, rand)
+#root.after(1000, rand)
+
+now = datetime.now()
+hour = now.strftime("%I")
+mins = now.strftime("%M")
+sec = now.strftime("%S")
+AmPm = now.strftime("%p")
+day = now.strftime("%A")
+month = now.strftime("%B")
+monthDay = now.strftime("%d")
+year = now.strftime("%Y")
+
+##06:59:12
+##PM
+##
+##Saturday
+##
+##August 28
+##     2018
+
+tmp = [x for x in range(1, 12)]
+
+timeStr = f'{hour}:{mins}:{sec}'
+timeX = randint(1,15)
+timeY = randint(1,10)
+print(f'time: {(timeX,timeY)}')
+tmp.remove(timeY)
+tmp.remove(timeY+1)
+if timeY-1 in tmp:
+    tmp.remove(timeY-1)
+if timeY+2 in tmp:
+    tmp.remove(timeY+2)
+
+
+#######
+
+dateStr = f'{month} {monthDay}'
+dateXEnd = 23 - len(dateStr)
+dateX = randint(1, dateXEnd)
+dateY = choice(tmp)
+print(f'date: {(dateX,dateY)}')
+tmp.remove(dateY)
+if dateY-1 in tmp:
+    tmp.remove(dateY-1)
+if dateY+1 in tmp:
+    tmp.remove(dateY+1)
+if dateY+2 in tmp:
+    tmp.remove(dateY+2)
+
+#######
+
+dayX = randint(1, dateXEnd)
+dayY = choice(tmp)
+
+#######
+
+for i in timeStr:
+    boxes[(timeX,timeY)].delete(1.0)
+    #time.sleep(2)
+    boxes[(timeX,timeY)].tag_configure("blueColor", foreground='blue')
+    boxes[(timeX,timeY)].insert(END, i, )
+    boxes[(timeX,timeY)].tag_add("center", '1.0', 'end')
+    boxes[(timeX,timeY)].tag_add('blueColor', '1.0', 'end')
+
+    timeX += 1
+
+timeX -= 8
+timeY += 1
+for i in AmPm:
+    boxes[(timeX,timeY)].delete(1.0)
+    boxes[(timeX,timeY)].tag_configure("blueColor", foreground='blue')
+    #time.sleep(2)
+    boxes[(timeX,timeY)].insert(END, i, )
+    boxes[(timeX,timeY)].tag_add("center", '1.0', 'end')
+    boxes[(timeX,timeY)].tag_add("blueColor", '1.0', 'end')
+    timeX += 1
+
+#######
+
+for i in dateStr:
+    if i != ' ':
+        boxes[(dateX,dateY)].delete(1.0)
+        boxes[(dateX,dateY)].tag_configure("blueColor", foreground='blue')
+        #time.sleep(2)
+        boxes[(dateX,dateY)].insert(END, i, )
+        boxes[(dateX,dateY)].tag_add("center", '1.0', 'end')
+        boxes[(dateX,dateY)].tag_add("blueColor", '1.0', 'end')
+        #dateX += 1
+    dateX += 1
+
+dateX -= 4
+dateY += 1
+for i in year:
+    boxes[(dateX,dateY)].delete(1.0)
+    boxes[(dateX,dateY)].tag_configure("blueColor", foreground='blue')
+    #time.sleep(2)
+    boxes[(dateX,dateY)].insert(END, i, )
+    boxes[(dateX,dateY)].tag_add("center", '1.0', 'end')
+    boxes[(dateX,dateY)].tag_add("blueColor", '1.0', 'end')
+    dateX += 1
+
+#######
+
+for i in day:
+    boxes[(dayX,dayY)].delete(1.0)
+    boxes[(dayX,dayY)].tag_configure("blueColor", foreground='blue')
+    #time.sleep(2)
+    boxes[(dayX,dayY)].insert(END, i, )
+    boxes[(dayX,dayY)].tag_add("center", '1.0', 'end')
+    boxes[(dayX,dayY)].tag_add("blueColor", '1.0', 'end')
+    dayX += 1
 
 #mainloop()
 
