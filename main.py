@@ -67,14 +67,16 @@ def gogo(x, y, times):
     boxes[(x,y)].insert(END, str(randint(0, 9)), )
     boxes[(x,y)].tag_add("center", '1.0', 'end')
     if x == 24 and y == 12 and times == 2:
-        root.after(500, fuck)
+        root.after(0, fuck)
 
 def rand():
     for x in range(3):
         for y in boxes:
             factor = randint(0,5)
-            wait = (factor * 100) + 3000
-            root.after(wait, gogo, y[0], y[1], x)
+            if y[0] == 24 and y[1] and x == 2:
+                root.after(500, gogo, y[0], y[1], x)
+            else:
+                root.after(factor*100, gogo, y[0], y[1], x)
         #time.sleep(0.001)
 
 #root.after(1000, rand)
