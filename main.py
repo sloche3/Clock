@@ -61,131 +61,178 @@ for i in range(325): # i got lazy here...
         c += 1
 
 
-def gogo(x, y):
+def gogo(x, y, times):
     boxes[(x,y)].delete(1.0)
     #time.sleep(2)
     boxes[(x,y)].insert(END, str(randint(0, 9)), )
     boxes[(x,y)].tag_add("center", '1.0', 'end')
+    if x == 24 and y == 12 and times == 2:
+        root.after(500, fuck)
 
 def rand():
     for x in range(3):
         for y in boxes:
             factor = randint(0,5)
             wait = (factor * 100) + 3000
-            root.after(wait, gogo, y[0], y[1])
+            root.after(wait, gogo, y[0], y[1], x)
         #time.sleep(0.001)
 
 #root.after(1000, rand)
 
-now = datetime.now()
-hour = now.strftime("%I")
-mins = now.strftime("%M")
-sec = now.strftime("%S")
-AmPm = now.strftime("%p")
-day = now.strftime("%A")
-month = now.strftime("%B")
-monthDay = now.strftime("%d")
-year = now.strftime("%Y")
+def UpdateForMin():
+    # returns secPos
 
-##06:59:12
-##PM
-##
-##Saturday
-##
-##August 28
-##     2018
+    now = datetime.now()
+    hour = now.strftime("%I")
+    mins = now.strftime("%M")
+    sec = now.strftime("%S")
+    AmPm = now.strftime("%p")
+    day = now.strftime("%A")
+    month = now.strftime("%B")
+    monthDay = now.strftime("%d")
+    year = now.strftime("%Y")
 
-tmp = [x for x in range(1, 12)]
-
-timeStr = f'{hour}:{mins}:{sec}'
-timeX = randint(1,15)
-timeY = randint(1,10)
-print(f'time: {(timeX,timeY)}')
-tmp.remove(timeY)
-tmp.remove(timeY+1)
-if timeY-1 in tmp:
-    tmp.remove(timeY-1)
-if timeY+2 in tmp:
-    tmp.remove(timeY+2)
+    ##06:59:12
+    ##PM
+    ##
+    ##Saturday
+    ##
+    ##August 28
+    ##     2018
 
 
-#######
+    tmp = [x for x in range(1, 12)]
 
-dateStr = f'{month} {monthDay}'
-dateXEnd = 23 - len(dateStr)
-dateX = randint(1, dateXEnd)
-dateY = choice(tmp)
-print(f'date: {(dateX,dateY)}')
-tmp.remove(dateY)
-if dateY-1 in tmp:
-    tmp.remove(dateY-1)
-if dateY+1 in tmp:
-    tmp.remove(dateY+1)
-if dateY+2 in tmp:
-    tmp.remove(dateY+2)
+    timeStr = f'{hour}:{mins}:{sec}'
+    timeX = randint(1,15)
+    timeY = randint(1,10)
+    print(f'time: {(timeX,timeY)}')
+    tmp.remove(timeY)
+    tmp.remove(timeY+1)
+    if timeY-1 in tmp:
+        tmp.remove(timeY-1)
+    if timeY+2 in tmp:
+        tmp.remove(timeY+2)
 
-#######
 
-dayX = randint(1, dateXEnd)
-dayY = choice(tmp)
+    #######
 
-#######
+    dateStr = f'{month} {monthDay}'
+    dateXEnd = 23 - len(dateStr)
+    dateX = randint(1, dateXEnd)
+    dateY = choice(tmp)
+    print(f'date: {(dateX,dateY)}')
+    tmp.remove(dateY)
+    if dateY-1 in tmp:
+        tmp.remove(dateY-1)
+    if dateY+1 in tmp:
+        tmp.remove(dateY+1)
+    if dateY+2 in tmp:
+        tmp.remove(dateY+2)
 
-for i in timeStr:
-    boxes[(timeX,timeY)].delete(1.0)
-    #time.sleep(2)
-    boxes[(timeX,timeY)].tag_configure("blueColor", foreground='blue')
-    boxes[(timeX,timeY)].insert(END, i, )
-    boxes[(timeX,timeY)].tag_add("center", '1.0', 'end')
-    boxes[(timeX,timeY)].tag_add('blueColor', '1.0', 'end')
+    #######
 
-    timeX += 1
+    dayX = randint(1, dateXEnd)
+    dayY = choice(tmp)
 
-timeX -= 8
-timeY += 1
-for i in AmPm:
-    boxes[(timeX,timeY)].delete(1.0)
-    boxes[(timeX,timeY)].tag_configure("blueColor", foreground='blue')
-    #time.sleep(2)
-    boxes[(timeX,timeY)].insert(END, i, )
-    boxes[(timeX,timeY)].tag_add("center", '1.0', 'end')
-    boxes[(timeX,timeY)].tag_add("blueColor", '1.0', 'end')
-    timeX += 1
+    #######
 
-#######
+    for i in timeStr:
+        boxes[(timeX,timeY)].delete(1.0)
+        #time.sleep(2)
+        boxes[(timeX,timeY)].tag_configure("blueColor", foreground='blue')
+        boxes[(timeX,timeY)].insert(END, i, )
+        boxes[(timeX,timeY)].tag_add("center", '1.0', 'end')
+        boxes[(timeX,timeY)].tag_add('blueColor', '1.0', 'end')
+        timeX += 1
 
-for i in dateStr:
-    if i != ' ':
+    secPos = (timeX-2,timeY)
+
+    timeX -= 8
+    timeY += 1
+    for i in AmPm:
+        boxes[(timeX,timeY)].delete(1.0)
+        boxes[(timeX,timeY)].tag_configure("blueColor", foreground='blue')
+        #time.sleep(2)
+        boxes[(timeX,timeY)].insert(END, i, )
+        boxes[(timeX,timeY)].tag_add("center", '1.0', 'end')
+        boxes[(timeX,timeY)].tag_add("blueColor", '1.0', 'end')
+        timeX += 1
+
+    #######
+
+    for i in dateStr:
+        if i != ' ':
+            boxes[(dateX,dateY)].delete(1.0)
+            boxes[(dateX,dateY)].tag_configure("blueColor", foreground='blue')
+            #time.sleep(2)
+            boxes[(dateX,dateY)].insert(END, i, )
+            boxes[(dateX,dateY)].tag_add("center", '1.0', 'end')
+            boxes[(dateX,dateY)].tag_add("blueColor", '1.0', 'end')
+            #dateX += 1
+        dateX += 1
+
+    dateX -= 4
+    dateY += 1
+    for i in year:
         boxes[(dateX,dateY)].delete(1.0)
         boxes[(dateX,dateY)].tag_configure("blueColor", foreground='blue')
         #time.sleep(2)
         boxes[(dateX,dateY)].insert(END, i, )
         boxes[(dateX,dateY)].tag_add("center", '1.0', 'end')
         boxes[(dateX,dateY)].tag_add("blueColor", '1.0', 'end')
-        #dateX += 1
-    dateX += 1
+        dateX += 1
 
-dateX -= 4
-dateY += 1
-for i in year:
-    boxes[(dateX,dateY)].delete(1.0)
-    boxes[(dateX,dateY)].tag_configure("blueColor", foreground='blue')
-    #time.sleep(2)
-    boxes[(dateX,dateY)].insert(END, i, )
-    boxes[(dateX,dateY)].tag_add("center", '1.0', 'end')
-    boxes[(dateX,dateY)].tag_add("blueColor", '1.0', 'end')
-    dateX += 1
+    #######
 
-#######
+    for i in day:
+        boxes[(dayX,dayY)].delete(1.0)
+        boxes[(dayX,dayY)].tag_configure("blueColor", foreground='blue')
+        #time.sleep(2)
+        boxes[(dayX,dayY)].insert(END, i, )
+        boxes[(dayX,dayY)].tag_add("center", '1.0', 'end')
+        boxes[(dayX,dayY)].tag_add("blueColor", '1.0', 'end')
+        dayX += 1
 
-for i in day:
-    boxes[(dayX,dayY)].delete(1.0)
-    boxes[(dayX,dayY)].tag_configure("blueColor", foreground='blue')
-    #time.sleep(2)
-    boxes[(dayX,dayY)].insert(END, i, )
-    boxes[(dayX,dayY)].tag_add("center", '1.0', 'end')
-    boxes[(dayX,dayY)].tag_add("blueColor", '1.0', 'end')
-    dayX += 1
+    # X = Columns
+    # Y = Rows
+
+    return secPos
+
+def fuck():
+    sp = UpdateForMin()
+    root.after(1, runn, sp[0], sp[1])
+
+
+def runn(x,y):
+    rn = datetime.now()
+    currSec = rn.strftime("%S")
+
+    boxes[(x,y)].delete(1.0)
+    boxes[(x,y)].tag_configure("blueColor", foreground='blue')
+    boxes[(x,y)].insert(END, currSec[0], )
+    boxes[(x,y)].tag_add("center", '1.0', 'end')
+    boxes[(x,y)].tag_add("blueColor", '1.0', 'end')
+
+    boxes[(x+1,y)].delete(1.0)
+    boxes[(x+1,y)].tag_configure("blueColor", foreground='blue')
+    boxes[(x+1,y)].insert(END, currSec[1], )
+    boxes[(x+1,y)].tag_add("center", '1.0', 'end')
+    boxes[(x+1,y)].tag_add("blueColor", '1.0', 'end')
+
+    if currSec == '59':
+        rand()
+        ###root.after(1500, fuck)
+        #time.sleep(1.5)
+        #sp = UpdateForMin()
+        #root.after(500, runn, sp[0], sp[1])
+    else:
+        root.after(1000, runn, x, y)
+    #print("here")
+
+
+sp = UpdateForMin()
+root.after(1, runn, sp[0], sp[1])
 
 #mainloop()
 
