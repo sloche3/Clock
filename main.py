@@ -35,13 +35,17 @@ for i in range(325): # i got lazy here...
     ##    boxes[(c,r)].tag_add("center", '1.0', 'end')
     if c < 25:
 
-        boxes[(c,r)] = Text(root, height = 1, width = 2)
+        boxes[(c,r)] = Text(root, relief = RIDGE, height = 1, width = 2, bg = "#%02x%02x%02x" % (0,34,64))
         #print((c,r))
         #boxes[i] = Text(root)
         boxes[(c,r)].config(font = "Consolas 50")
         boxes[(c,r)].tag_configure("center", justify='center')
-        boxes[(c,r)].insert(END, str(randint(0, 9)), )
+        boxes[(c,r)].insert(END, chr(randint(48,122)), )
         boxes[(c,r)].tag_add("center", '1.0', 'end')
+        boxes[(c,r)].tag_configure("here", foreground= "#%02x%02x%02x" % (81,103,193))
+        #boxes[(c,r)].tag_configure("purp", foreground= "#%02x%02x%02x" % (255,131,43)) # orange
+        boxes[(c,r)].tag_configure("purp", foreground= "#%02x%02x%02x" % (5,252,79))
+        boxes[(c,r)].tag_add("here", "1.0", "1.4")
 
         boxes[(c,r)].grid(row = r, column = c)
         c += 1
@@ -49,13 +53,17 @@ for i in range(325): # i got lazy here...
         c = 0
         r += 1
 
-        boxes[(c,r)] = Text(root, height = 1, width = 2)
+        boxes[(c,r)] = Text(root, relief = RIDGE, height = 1, width = 2, bg = "#%02x%02x%02x" % (0,34,64))
         #print((c,r))
         #boxes[i] = Text(root)
         boxes[(c,r)].config(font = "Consolas 50")
         boxes[(c,r)].tag_configure("center", justify='center')
-        boxes[(c,r)].insert(END, str(randint(0, 9)), )
+        boxes[(c,r)].insert(END, chr(randint(48,122)), )
         boxes[(c,r)].tag_add("center", '1.0', 'end')
+        #boxes[(c,r)].tag_configure("purp", foreground= "#%02x%02x%02x" % (255,131,43))
+        boxes[(c,r)].tag_configure("purp", foreground= "#%02x%02x%02x" % (5,252,79))
+        boxes[(c,r)].tag_configure("here", foreground= "#%02x%02x%02x" % (81,103,193))
+        boxes[(c,r)].tag_add("here", "1.0", "1.4")
 
         boxes[(c,r)].grid(row = r, column = c)
         c += 1
@@ -64,16 +72,17 @@ for i in range(325): # i got lazy here...
 def gogo(x, y, times):
     boxes[(x,y)].delete(1.0)
     #time.sleep(2)
-    boxes[(x,y)].insert(END, str(randint(0, 9)), )
+    boxes[(x,y)].insert(END, chr(randint(48,122)), )
     boxes[(x,y)].tag_add("center", '1.0', 'end')
-    if x == 24 and y == 12 and times == 2:
+    boxes[(x,y)].tag_add("here", "1.0", "1.4")
+    if x == 24 and y == 12 and times == 3:
         root.after(0, fuck)
 
 def rand():
-    for x in range(3):
+    for x in range(4):
         for y in boxes:
             factor = randint(0,5)
-            if y[0] == 24 and y[1] and x == 2:
+            if y[0] == 24 and y[1] and x == 3:
                 root.after(500, gogo, y[0], y[1], x)
             else:
                 root.after(factor*100, gogo, y[0], y[1], x)
@@ -145,7 +154,7 @@ def UpdateForMin():
         boxes[(timeX,timeY)].tag_configure("blueColor", foreground='blue')
         boxes[(timeX,timeY)].insert(END, i, )
         boxes[(timeX,timeY)].tag_add("center", '1.0', 'end')
-        boxes[(timeX,timeY)].tag_add('blueColor', '1.0', 'end')
+        boxes[(timeX,timeY)].tag_add('purp', '1.0', 'end')
         timeX += 1
 
     secPos = (timeX-2,timeY)
@@ -158,7 +167,7 @@ def UpdateForMin():
         #time.sleep(2)
         boxes[(timeX,timeY)].insert(END, i, )
         boxes[(timeX,timeY)].tag_add("center", '1.0', 'end')
-        boxes[(timeX,timeY)].tag_add("blueColor", '1.0', 'end')
+        boxes[(timeX,timeY)].tag_add("purp", '1.0', 'end')
         timeX += 1
 
     #######
@@ -170,7 +179,7 @@ def UpdateForMin():
             #time.sleep(2)
             boxes[(dateX,dateY)].insert(END, i, )
             boxes[(dateX,dateY)].tag_add("center", '1.0', 'end')
-            boxes[(dateX,dateY)].tag_add("blueColor", '1.0', 'end')
+            boxes[(dateX,dateY)].tag_add("purp", '1.0', 'end')
             #dateX += 1
         dateX += 1
 
@@ -182,7 +191,7 @@ def UpdateForMin():
         #time.sleep(2)
         boxes[(dateX,dateY)].insert(END, i, )
         boxes[(dateX,dateY)].tag_add("center", '1.0', 'end')
-        boxes[(dateX,dateY)].tag_add("blueColor", '1.0', 'end')
+        boxes[(dateX,dateY)].tag_add("purp", '1.0', 'end')
         dateX += 1
 
     #######
@@ -193,7 +202,7 @@ def UpdateForMin():
         #time.sleep(2)
         boxes[(dayX,dayY)].insert(END, i, )
         boxes[(dayX,dayY)].tag_add("center", '1.0', 'end')
-        boxes[(dayX,dayY)].tag_add("blueColor", '1.0', 'end')
+        boxes[(dayX,dayY)].tag_add("purp", '1.0', 'end')
         dayX += 1
 
     # X = Columns
@@ -214,13 +223,13 @@ def runn(x,y):
     boxes[(x,y)].tag_configure("blueColor", foreground='blue')
     boxes[(x,y)].insert(END, currSec[0], )
     boxes[(x,y)].tag_add("center", '1.0', 'end')
-    boxes[(x,y)].tag_add("blueColor", '1.0', 'end')
+    boxes[(x,y)].tag_add("purp", '1.0', 'end')
 
     boxes[(x+1,y)].delete(1.0)
     boxes[(x+1,y)].tag_configure("blueColor", foreground='blue')
     boxes[(x+1,y)].insert(END, currSec[1], )
     boxes[(x+1,y)].tag_add("center", '1.0', 'end')
-    boxes[(x+1,y)].tag_add("blueColor", '1.0', 'end')
+    boxes[(x+1,y)].tag_add("purp", '1.0', 'end')
 
     if currSec == '59':
         rand()
