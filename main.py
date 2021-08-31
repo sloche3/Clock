@@ -44,7 +44,9 @@ for i in range(325): # i got lazy here...
         boxes[(c,r)].tag_add("center", '1.0', 'end')
         boxes[(c,r)].tag_configure("here", foreground= "#%02x%02x%02x" % (81,103,193))
         #boxes[(c,r)].tag_configure("purp", foreground= "#%02x%02x%02x" % (255,131,43)) # orange
-        boxes[(c,r)].tag_configure("purp", foreground= "#%02x%02x%02x" % (5,252,79))
+        #boxes[(c,r)].tag_configure("purp", foreground= "#%02x%02x%02x" % (5,252,79))
+        boxes[(c,r)].tag_configure("purp", foreground= "#%02x%02x%02x" % (6,253,73))
+        boxes[(c,r)].tag_configure("trueGreen", foreground= "#%02x%02x%02x" % (6,253,73))
         boxes[(c,r)].tag_add("here", "1.0", "1.4")
 
         boxes[(c,r)].grid(row = r, column = c)
@@ -61,13 +63,14 @@ for i in range(325): # i got lazy here...
         boxes[(c,r)].insert(END, chr(randint(48,122)), )
         boxes[(c,r)].tag_add("center", '1.0', 'end')
         #boxes[(c,r)].tag_configure("purp", foreground= "#%02x%02x%02x" % (255,131,43))
-        boxes[(c,r)].tag_configure("purp", foreground= "#%02x%02x%02x" % (5,252,79))
+        #boxes[(c,r)].tag_configure("purp", foreground= "#%02x%02x%02x" % (5,252,79))
         boxes[(c,r)].tag_configure("here", foreground= "#%02x%02x%02x" % (81,103,193))
+        boxes[(c,r)].tag_configure("purp", foreground= "#%02x%02x%02x" % (6,253,73))
+        boxes[(c,r)].tag_configure("trueGreen", foreground= "#%02x%02x%02x" % (6,253,73))
         boxes[(c,r)].tag_add("here", "1.0", "1.4")
 
         boxes[(c,r)].grid(row = r, column = c)
         c += 1
-
 
 def gogo(x, y, times):
     boxes[(x,y)].delete(1.0)
@@ -76,19 +79,26 @@ def gogo(x, y, times):
     boxes[(x,y)].tag_add("center", '1.0', 'end')
     boxes[(x,y)].tag_add("here", "1.0", "1.4")
     if x == 24 and y == 12 and times == 3:
+        #time.sleep(.5)
+        #sp = UpdateForMin()
         root.after(0, fuck)
+        print("      gogo")
+        #print("here")
+
 
 def rand():
     for x in range(4):
         for y in boxes:
             factor = randint(0,5)
-            if y[0] == 24 and y[1] and x == 3:
+            if y[0] == 24 and y[1] == 12 and x == 3:
                 root.after(500, gogo, y[0], y[1], x)
+                print("   rand")
             else:
                 root.after(factor*100, gogo, y[0], y[1], x)
         #time.sleep(0.001)
 
 #root.after(1000, rand)
+
 
 def UpdateForMin():
     # returns secPos
@@ -154,7 +164,8 @@ def UpdateForMin():
         boxes[(timeX,timeY)].tag_configure("blueColor", foreground='blue')
         boxes[(timeX,timeY)].insert(END, i, )
         boxes[(timeX,timeY)].tag_add("center", '1.0', 'end')
-        boxes[(timeX,timeY)].tag_add('purp', '1.0', 'end')
+        boxes[(timeX,timeY)].tag_add('here', '1.0', 'end')
+        root.after(400, FadeIn, boxes[(timeX,timeY)], [81,103,193])
         timeX += 1
 
     secPos = (timeX-2,timeY)
@@ -167,7 +178,8 @@ def UpdateForMin():
         #time.sleep(2)
         boxes[(timeX,timeY)].insert(END, i, )
         boxes[(timeX,timeY)].tag_add("center", '1.0', 'end')
-        boxes[(timeX,timeY)].tag_add("purp", '1.0', 'end')
+        boxes[(timeX,timeY)].tag_add("here", '1.0', 'end')
+        root.after(400, FadeIn, boxes[(timeX,timeY)], [81,103,193])
         timeX += 1
 
     #######
@@ -179,7 +191,8 @@ def UpdateForMin():
             #time.sleep(2)
             boxes[(dateX,dateY)].insert(END, i, )
             boxes[(dateX,dateY)].tag_add("center", '1.0', 'end')
-            boxes[(dateX,dateY)].tag_add("purp", '1.0', 'end')
+            boxes[(dateX,dateY)].tag_add("here", '1.0', 'end')
+            root.after(1200, FadeIn, boxes[(dateX,dateY)], [81,103,193])
             #dateX += 1
         dateX += 1
 
@@ -191,7 +204,8 @@ def UpdateForMin():
         #time.sleep(2)
         boxes[(dateX,dateY)].insert(END, i, )
         boxes[(dateX,dateY)].tag_add("center", '1.0', 'end')
-        boxes[(dateX,dateY)].tag_add("purp", '1.0', 'end')
+        boxes[(dateX,dateY)].tag_add("here", '1.0', 'end')
+        root.after(1200, FadeIn, boxes[(dateX,dateY)], [81,103,193])
         dateX += 1
 
     #######
@@ -202,7 +216,8 @@ def UpdateForMin():
         #time.sleep(2)
         boxes[(dayX,dayY)].insert(END, i, )
         boxes[(dayX,dayY)].tag_add("center", '1.0', 'end')
-        boxes[(dayX,dayY)].tag_add("purp", '1.0', 'end')
+        boxes[(dayX,dayY)].tag_add("here", '1.0', 'end')
+        root.after(800, FadeIn, boxes[(dayX,dayY)], [81,103,193])
         dayX += 1
 
     # X = Columns
@@ -211,11 +226,14 @@ def UpdateForMin():
     return secPos
 
 def fuck():
-    sp = UpdateForMin()
-    root.after(1, runn, sp[0], sp[1])
+    sss = UpdateForMin()
+    root.after(0, runn, sss[0], sss[1], True)
+    print("         fuck")
+    print("------------------")
 
 
-def runn(x,y):
+def runn(x,y, firstIter):
+
     rn = datetime.now()
     currSec = rn.strftime("%S")
 
@@ -223,29 +241,78 @@ def runn(x,y):
     boxes[(x,y)].tag_configure("blueColor", foreground='blue')
     boxes[(x,y)].insert(END, currSec[0], )
     boxes[(x,y)].tag_add("center", '1.0', 'end')
-    boxes[(x,y)].tag_add("purp", '1.0', 'end')
+    #boxes[(x,y)].tag_add("tmpp", '1.0', 'end')
 
     boxes[(x+1,y)].delete(1.0)
     boxes[(x+1,y)].tag_configure("blueColor", foreground='blue')
     boxes[(x+1,y)].insert(END, currSec[1], )
     boxes[(x+1,y)].tag_add("center", '1.0', 'end')
-    boxes[(x+1,y)].tag_add("purp", '1.0', 'end')
+    #boxes[(x+1,y)].tag_add("tmpp", '1.0', 'end')
+
+
+    if 'tmpp' in boxes[(x-1,y)].tag_names():
+        boxes[(x,y)].tag_add("tmpp", '1.0', 'end')
+        boxes[(x+1,y)].tag_add("tmpp", '1.0', 'end')
+    elif firstIter:
+        boxes[(x,y)].tag_add("here", '1.0', 'end')
+        boxes[(x+1,y)].tag_add("here", '1.0', 'end')
+    else:
+        boxes[(x,y)].tag_add("trueGreen", '1.0', 'end')
+        boxes[(x+1,y)].tag_add("trueGreen", '1.0', 'end')
+
+    #print(boxes[(x-1,y)].tag_names())
+
+    ##    if currSec == '00':
+    ##        boxes[(x,y)].tag_add("here", '1.0', 'end')
+    ##        boxes[(x+1,y)].tag_add("here", '1.0', 'end')
+    ##    else:
+    ##        boxes[(x,y)].tag_add("tmpp", '1.0', 'end')
+    ##        boxes[(x+1,y)].tag_add("tmpp", '1.0', 'end')
 
     if currSec == '59':
-        rand()
+        #rand()
+        root.after(1000, rand)
+        print("runn")
+        #root.after(0, rand)
         ###root.after(1500, fuck)
         #time.sleep(1.5)
         #sp = UpdateForMin()
         #root.after(500, runn, sp[0], sp[1])
     else:
-        root.after(1000, runn, x, y)
-    #print("here")
+        root.after(1000, runn, x, y, False)
+
+
+##for i in timeStr:
+##    boxes[(timeX,timeY)].delete(1.0)
+##    #time.sleep(2)
+##    boxes[(timeX,timeY)].tag_configure("blueColor", foreground='blue')
+##    boxes[(timeX,timeY)].insert(END, i, )
+##    boxes[(timeX,timeY)].tag_add("center", '1.0', 'end')
+##    boxes[(timeX,timeY)].tag_add('purp', '1.0', 'end')
+##    timeX += 1
+
+##  boxes[(c,r)].tag_configure("purp", foreground= "#%02x%02x%02x" % (5,252,79))
+##  boxes[(c,r)].tag_configure("here", foreground= "#%02x%02x%02x" % (81,103,193))
+
+##  boxes[(c,r)].tag_add("here", "1.0", "1.4")
+
+
+
+def FadeIn(box, currColor):
+    currColor[0] -= 5
+    currColor[1] += 10
+    if currColor[2] > 79:
+        currColor[2] -= 10
+    box.tag_configure('tmpp', foreground = "#%02x%02x%02x" % tuple(currColor))
+    box.tag_add('tmpp', '1.0', '1.4')
+    if currColor[0] != 6:
+        root.after(200, FadeIn, box, currColor)
+    else:
+        box.tag_delete('tmpp', '1.0', 'end')
+        box.tag_add('trueGreen', '1.0', 'end')
 
 
 sp = UpdateForMin()
-root.after(1, runn, sp[0], sp[1])
+root.after(1, runn, sp[0], sp[1], True)
 
-#mainloop()
-
-
-
+root.mainloop()
