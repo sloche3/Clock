@@ -122,18 +122,26 @@ def UpdateForMin():
     ##     2018
 
 
-    tmp = [x for x in range(1, 12)]
+    tmp = [x for x in range(1, 11)]
+    tmpDate = [x for x in range(1,11)]
 
     timeStr = f'{hour}:{mins}:{sec}'
     timeX = randint(1,15)
     timeY = randint(1,10)
     print(f'time: {(timeX,timeY)}')
     tmp.remove(timeY)
-    tmp.remove(timeY+1)
+    tmpDate.remove(timeY)
     if timeY-1 in tmp:
         tmp.remove(timeY-1)
+        tmpDate.remove(timeY-1)
+    if timeY+1 in tmp:
+        tmp.remove(timeY+1)
+        tmpDate.remove(timeY+1)
     if timeY+2 in tmp:
         tmp.remove(timeY+2)
+        tmpDate.remove(timeY+2)
+    if timeY-2 in tmpDate:
+        tmpDate.remove(timeY-2)
 
 
     #######
@@ -141,7 +149,7 @@ def UpdateForMin():
     dateStr = f'{month} {monthDay}'
     dateXEnd = 23 - len(dateStr)
     dateX = randint(1, dateXEnd)
-    dateY = choice(tmp)
+    dateY = choice(tmpDate)
     print(f'date: {(dateX,dateY)}')
     tmp.remove(dateY)
     if dateY-1 in tmp:
@@ -153,7 +161,10 @@ def UpdateForMin():
 
     #######
 
-    dayX = randint(1, dateXEnd)
+    dayXEnd = 23 - len(day)
+    dayX = randint(1, dayXEnd)
+    if 10 in tmp:
+        tmp.append(11)
     dayY = choice(tmp)
 
     #######
